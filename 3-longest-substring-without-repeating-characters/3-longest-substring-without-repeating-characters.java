@@ -3,7 +3,7 @@ class Solution {
         Map<Character, Integer> map = new HashMap<>();
         int ans =0;
         for(int i=0, j=0;j<s.length();j++){
-            Character c = Character.valueOf(s.charAt(j));
+            char c = s.charAt(j);
             if(map.containsKey(c)){
                 i = Math.max(i, map.get(c)+1);
             }
