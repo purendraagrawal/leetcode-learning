@@ -1,13 +1,13 @@
 class Solution {
     public int findKthLargest(int[] nums, int k) {
-        return findKthLargest(nums, 0, nums.length-1,nums.length-k);
+        return findKthLargest(nums, 0, nums.length-1,k-1);
     }
     
     public static int partition(int[] arr, int low, int high) {
 		int pivot = arr[high];
 		int i = low - 1;
 		for (int j = low; j < high; j++) {
-			if (arr[j] < pivot) {
+			if (arr[j] > pivot) {
 				i++;
 				swap(arr, i, j);
 			}
