@@ -3,30 +3,24 @@ class Solution {
         int lengthOfS = s.length();
         int lengthOfP = p.length();
         List<Integer> list = new ArrayList<>();
-        for(int i = 0;i<lengthOfS-lengthOfP+1;i++){
-            String sub = s.substring(i,i+lengthOfP);
-            if(isAnagram(sub,p)){
-                list.add(i);
-            }    
+        int[] sArr = new int[26];
+        int[] pArr = new int[26];
+        int i = 0;
+        if(lengthOfS==0 || lengthOfP==0 || lengthOfS<lengthOfP)
+            return list;
+        for(;i<lengthOfP;i++){
+            pArr[p.charAt(i)-97]++;
+            sArr[s.charAt(i)-97]++;
         }
+        for(;i<lengthOfS;i++){
+            int startIndex = i-lengthOfP;
+            if(Arrays.equals(pArr,sArr))
+                list.add(startIndex);
+            sArr[s.charAt(startIndex)-97]--;
+            sArr[s.charAt(i)-97]++;
+        }
+        if(Arrays.equals(pArr,sArr))
+                list.add(lengthOfS-lengthOfP);
         return list;
-    }
-    
-    public boolean isAnagram(String s, String p){
-        if(s.length()!=p.length())
-            return false;
-        
-        char[] value = new char[26];
-        char[] sArr = s.toCharArray();
-        char[] pArr = p.toCharArray();
-        for(int i = 0;i<sArr.length;i++){
-            value[sArr[i]-97]++;
-            value[pArr[i]-97]--;
-        }
-        for(int i=0;i<value.length;i++){
-            if(value[i]!=0)
-                return false;
-        }
-        return true;
     }
 }
