@@ -1,29 +1,33 @@
 class Solution {
     public boolean checkInclusion(String s1, String s2) {
-        int lengthOfS1 = s1.length();
-        int lengthOfS2 = s2.length();
-        if(lengthOfS1>lengthOfS2)
+        int lenOfS1 = s1.length();
+        int lenOfS2 = s2.length();
+        
+        if(lenOfS1>lenOfS2)
             return false;
-        int[] s1Arr = new int[26];
-        int[] s2Arr = new int[26];
-        for(int i=0;i<lengthOfS1;i++){
-            s1Arr[s1.charAt(i)-'a']++;
-            s2Arr[s2.charAt(i)-'a']++;
+        
+        int[] arr1 = new int[26];
+        int[] arr2 = new int[26];
+        
+        int end = 0;
+        
+        for(;end<lenOfS1;end++){
+            arr1[s1.charAt(end)-97]++;
+            arr2[s2.charAt(end)-97]++;
         }
-        for(int i=0;i<lengthOfS2-lengthOfS1;i++){
-            if(isMatch(s1Arr, s2Arr))
+        for(int start=0;end<lenOfS2;end++, start++){
+            if(isArrayMatches(arr1, arr2))
                 return true;
-            s2Arr[s2.charAt(i+lengthOfS1)-'a']++;
-            s2Arr[s2.charAt(i)-'a']--;
+            arr2[s2.charAt(start)-97]--;
+            arr2[s2.charAt(end)-97]++;
         }
-        return isMatch(s1Arr, s2Arr);
+        return isArrayMatches(arr1, arr2);
     }
     
-    public boolean isMatch(int[] s1Arr, int[] s2Arr){
-        for(int i=0;i<s1Arr.length;i++){
-            if(s1Arr[i]!=s2Arr[i]){
+    public boolean isArrayMatches(int[] arr1, int[] arr2){
+        for(int i=0;i<arr1.length;i++){
+            if(arr1[i]!=arr2[i])
                 return false;
-            }
         }
         return true;
     }
