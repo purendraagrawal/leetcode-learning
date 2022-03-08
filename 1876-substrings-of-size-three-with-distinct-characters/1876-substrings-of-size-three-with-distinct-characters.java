@@ -2,12 +2,12 @@ class Solution {
     public int countGoodSubstrings(String s) {
        int result = 0;
         for(int i=0;i<s.length()-2;i++){
-         Set<Character> set = new HashSet<>();
-         set.add(s.charAt(i));
-         set.add(s.charAt(i+1));
-         set.add(s.charAt(i+2));
-         if(set.size()==3)
-             result++;
+         int[] data = new int[26];
+         data[s.charAt(i)-'a']++;
+         data[s.charAt(i+1)-'a']++;
+         data[s.charAt(i+2)-'a']++;
+         if(data[s.charAt(i)-'a']==1 && data[s.charAt(i+1)-'a']==1 && data[s.charAt(i+2)-'a']==1)
+            result++;   
         }
         return result;
     }
