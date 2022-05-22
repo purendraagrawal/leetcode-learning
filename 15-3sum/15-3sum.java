@@ -1,39 +1,46 @@
 class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
-     Arrays.sort(nums);
-        int len = nums.length;
-    List<List<Integer>> mainList = new ArrayList<>();
-     for(int i =0;i<len;i++){
-         if(i>=1 && nums[i]==nums[i-1])
-             continue;
-         int firstNum = nums[i];
-         int low = i+1;
-         int high = len-1;
-         while(low<high){
-             int secondNum = nums[low];
-             int thirNum = nums[high];
-             int sum = firstNum+secondNum + thirNum;
-             if(sum == 0){
-                 List<Integer> list = new ArrayList<>();
-                 list.add(firstNum);
-                 list.add(secondNum);
-                 list.add(thirNum);
-                 mainList.add(list);
-                 low++;
-                 high--;
-                 while(low<high && nums[low]==nums[low-1]){
-                     low++;
-                 }
-                 while(low<high && nums[high]==nums[high+1]){
-                     high--;
-                 }
-             }else if(sum<0){
-                 low++;
-             }else{
-                 high--;
-             }
-         }
-      }
-        return mainList;
+        Arrays.sort(nums);
+        List<List<Integer>> res = new ArrayList<>();
+        for(int i=0;i<nums.length-1;i++){
+            int firstNum = nums[i];
+            List<List<Integer>> listTwoSum = twoSum(nums, i+1 , -1*firstNum);
+            if(!listTwoSum.isEmpty()){
+                for(List<Integer> list : listTwoSum){
+                    list.add(firstNum);
+                }
+                res.addAll(listTwoSum);
+            }
+            while(i<nums.length-1 && nums[i] == nums[i+1]){
+                i++;
+            }
+        }//-4,-1,-1,0,1,2
+        return res;
+    }
+    
+    public List<List<Integer>> twoSum(int[] nums, int l, int target){
+        List<List<Integer>> listTwoSum = new ArrayList<>();
+        int h = nums.length-1;
+        while(l<h){
+            if(nums[l]+nums[h]==target){
+                List<Integer> list = new ArrayList<>();
+                list.add(nums[l]);
+                list.add(nums[h]);
+                while(l<h && nums[l] == nums[l+1]){
+                    l++;
+                }
+                while(l<h && nums[h] == nums[h-1]){
+                    h--;
+                }
+                l++;
+                h--;
+                listTwoSum.add(list);
+            }else if(nums[l] + nums[h] < target){
+                l++;
+            }else{
+                h--;
+            }
+        }
+        return listTwoSum;
     }
 }
