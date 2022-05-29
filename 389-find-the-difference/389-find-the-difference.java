@@ -1,21 +1,19 @@
-class Solution {
-    public char findTheDifference(String s, String t) {
-        char[] sArr = s.toCharArray();
-        char[] tArr = t.toCharArray();
-        char[] result = new char[26];
-        for(char c : sArr){
-            result[c-97]--;
-        }
-        for(char c : tArr){
-            result[c-97]++;
-        }
-        char res='a';
-        for(int i=0;i<result.length;i++){
-            if(result[i]==1){
-                res = (char)(i+97);
-                break;
+    class Solution {
+        public char findTheDifference(String s, String t) {
+            int[] result = new int[26];
+            for(char c : s.toCharArray()){
+                result[c-97]++;
             }
+            for(char c : t.toCharArray()){
+                result[c-97]--;
+            }
+            char ans = 'a';
+            for(int i=0;i<result.length;i++){
+                if(result[i]==-1){
+                    ans = (char)(97+i);
+                    break;
+                }
+            }
+            return ans;
         }
-        return res;
-    }
-}
+    }  
