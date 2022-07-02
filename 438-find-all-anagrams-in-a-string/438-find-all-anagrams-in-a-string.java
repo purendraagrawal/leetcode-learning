@@ -5,23 +5,26 @@ class Solution {
         int lenOfP = p.length();
         if(lenOfS < lenOfP)
             return result;
+        int[] freqOfP = getfrequency(p);
         for(int i =0 ; i <lenOfS-lenOfP+1 ; i++){
-            if(isAnagram(s.substring(i, i+lenOfP),p))
+            int[] freqOfS = getfrequency(s.substring(i, i+lenOfP));
+            if(areSame(freqOfP, freqOfS))
                 result.add(i);
         }
         return result;
     }
     
-    public boolean isAnagram(String s, String p){
+    public int[] getfrequency(String s){
         int[] arr = new int[26];
         for(char c : s.toCharArray()){
             arr[c-97]++;
         }
-        for(char c : p.toCharArray()){
-            arr[c-97]--;
-        }
-        for(int i : arr){
-            if(i!=0)
+        return arr;
+    }
+    
+    public boolean areSame(int[] s, int[] p){
+        for(int i=0;i<s.length;i++){
+            if(s[i]!=p[i])
                 return false;
         }
         return true;
